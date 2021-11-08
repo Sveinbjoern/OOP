@@ -2,20 +2,11 @@
 #include "OrderBook.h"
 
 
-OrderBook::OrderBook()
+OrderBook::OrderBook(const std::string& filename)
 {
-    // OrderBookEntry order1 = OrderBookEntry {200,10,OrderBook::OrderBookType::ask,"fasdfs","SFD","GOFF"};
-    // cout << "order1.amount: " << order1.amount <<endl;
-    // cout << "order1.price: " << order1.price <<endl;
-
-    // orders.push_back(
-    //     OrderBookEntry{200,10,OrderBookType::ask,"fasdfs","SFD","GOFF"}
-    // );
+    CSVReader::readDocumentLineByLine( filename, *this );
     
-    // OrderBook::addToSetOfProducts("INVALID/INPUT");
-    
-    
-
+    // "data\\20200317T3.csv"
 }
 
 

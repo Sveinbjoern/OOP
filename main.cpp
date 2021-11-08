@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
 
     // GameOfTrades GoT{};
     // GoT.init();
-    OrderBook orderbook;
-    CSVReader::readDocumentLineByLine("data\\20200317T3.csv", orderbook );
+   
+    
     // dataSpace::OrderBookType sjdhfk = dataSpace::OrderBookType::ask;
     // dataSpace::OrderBookType sjdhfk2 = dataSpace::OrderBookType::bid;
     // dataSpace::OrderBookType sjdhfk3 = dataSpace::OrderBookType::ask;
