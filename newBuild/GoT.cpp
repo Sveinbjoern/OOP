@@ -12,13 +12,15 @@ int main(int argc, char *argv[])
     std::vector<std::string> barmaid2;
     std::string faulty;
     faulty.append("asdfs");
-    std::cout << faulty << "/n";
+    std::cout << faulty << "\n";
     barmaid.push_back(23423);
-    // barmaid2.push_back(faulty);
+    barmaid2.push_back(faulty);
 
-    // std::cout << barmaid[0];
-    GameOfTrades GoT{};
-    GoT.init();
+    std::cout << barmaid[0];
+    std::cout << barmaid2[0];
+    std::cout << barmaid[0];
+    // GameOfTrades GoT{};
+    // GoT.init();
     return 0;
 }
 
