@@ -1,0 +1,11 @@
+
+#include <map>
+/*
+    Make something with the map library
+    // map from ints to function pointers
+    std::map<int,void(*)()> menu;
+    // connect 1 to the printHelp function
+    menu[1] = printHelp;
+    // call option 1
+    menu[1]();
+*/
