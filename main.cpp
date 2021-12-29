@@ -10,10 +10,15 @@
 #include "src\OrderBook.h"
 #include "src\CSVReader.h"
 #include "src\OrderBookEntry.h"
-
+#include <vector>
 
 int main(int argc, char *argv[])
 {
+    std::string fart;
+    std::vector<int> barmaid;
+    barmaid.push_back(324345);
+    std::cout << barmaid[0];
+    std::cin >> fart;
 
     // std::string start;
     // std::string csvLine = "";
