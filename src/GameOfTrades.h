@@ -28,10 +28,10 @@ class GameOfTrades
         /** Call this to start the sim */
         void init();
 
-        //The enum OrderBookType available for every part of the app
-        enum class OrderBookType{ask,bid};
+        // //The enum OrderBookType available for every part of the app
+        // enum class OrderBookType{ask,bid};
         
-        //Create an orderbook
+        //Create an orderbook with default constructor
         OrderBook orderBook;
         
 
@@ -40,6 +40,9 @@ class GameOfTrades
         unsigned short int userInputInt;
         unsigned short int numberOfOptions;
         std::string userInputText;
+        std::string menuText;
+        std::string userName;
+        std::string advisorName;
 
         void printIntroduction();
         void printMenu();
@@ -48,6 +51,12 @@ class GameOfTrades
          * or any other random input(interpreted to 0)
          */
         void printHelpMenu();
+
+        /**creates the response for indivdual help for commands*/
+        std::string helpCMD(std::string &command);
+
+        /**returns the text for the help menu*/
+        std::string helpText();
         void printStatsMenu();
         void printPlaceAnAskMenu();
         void printPlaceABidMenu();
@@ -55,6 +64,12 @@ class GameOfTrades
         void printEndScreen();
 
         void updateTime();
+
+        /** Functions to handle inputs that depend on menu*/
+        std::string mainInput(std::string); 
+
+          /** Gets input from user. Chnanges the string userInputText*/
+        void getUserInputLine(std::string &userInputText);
 
         /** Gets input from user. Returns */
         void getUserInputMainMenu(unsigned short int &userInputInt);

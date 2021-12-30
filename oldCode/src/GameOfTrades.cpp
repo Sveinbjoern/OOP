@@ -12,16 +12,16 @@ using namespace std;
 void GameOfTrades::init(){
 
   
-    // dataSpace::OrderBookType type1 = dataSpace::OrderBookType::bid;
-    // cout << (type1 == dataSpace::OrderBookType::ask) << endl;
-    // cout << static_cast<underlying_type<dataSpace::OrderBookType>::type>(type1) << endl;
+    // HelpersNameSpace::OrderBookType type1 = HelpersNameSpace::OrderBookType::bid;
+    // cout << (type1 == HelpersNameSpace::OrderBookType::ask) << endl;
+    // cout << static_cast<underlying_type<HelpersNameSpace::OrderBookType>::type>(type1) << endl;
 
     
 
-    // OrderBookEntry order1 (22.23,123.345,dataSpace::OrderBookType::bid, "sdfg","dfg","FGH");
+    // OrderBookEntry order1 (22.23,123.345,HelpersNameSpace::OrderBookType::bid, "sdfg","dfg","FGH");
     // cout << order1.price << endl;
     // cout << order1.amount << endl;
-    // cout << static_cast<underlying_type<dataSpace::OrderBookType>::type>(order1.typeOfEntry) << endl;
+    // cout << static_cast<underlying_type<HelpersNameSpace::OrderBookType>::type>(order1.typeOfEntry) << endl;
     // cout << order1.firstProduct << endl;
     // cout << order1.secondProduct << endl;
     // cout << order1.dateTimeString << endl;

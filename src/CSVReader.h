@@ -3,9 +3,11 @@
 #include <vector>
 #include <string>
 
+#include "OrderBook.h"
+#include "OrderBookEntry.h"
+// class OrderBook;
+// class OrderBookType;
 
-class OrderBook;
-class OrderBookType;
 
 /** Reads lines from a csv document and can tokenize strings and return Orderbook entries (OBE).
  * Only contains static functions, and does not store any data itself.
@@ -24,7 +26,7 @@ class CSVReader
      * arg4 cont.: If add is true: Valid entries will add to products to setOfProducts. 
      * If add is false: Products will be tested if they belong to setOFProducts before creation of OBE  
     */
-    static OrderBookEntry CheckValidData__ParseOBE(std::string& line,  const std::string& documentName, OrderBook& orderBook, const bool add);
+    static OrderBookEntry CheckValidData__ParseOBE(std::string& line, OrderBook& orderBook, const bool add);
 
     
     /** Create a vector of strings from a string seperated by a char

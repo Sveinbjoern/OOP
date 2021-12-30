@@ -29,7 +29,7 @@ class OrderBook
          * arg3: timestamp
          * arg4: source vector of orders to serach
         */
-        std::vector<OrderBookEntry> getOrders(  const dataSpace::OrderBookType& type,
+        std::vector<OrderBookEntry> getOrders(  const HelpersNameSpace::OrderBookType& type,
                                                 const Product& product,
                                                 const std::string& timestamp,
                                                 const std::vector<OrderBookEntry>& source );
@@ -46,7 +46,7 @@ class OrderBook
          * arg3: source vector of orders to serach
         */
         std::vector<OrderBookEntry> getOrders(  const std::string& timestamp,
-                                                const dataSpace::OrderBookType& type,
+                                                const HelpersNameSpace::OrderBookType& type,
                                                 const std::vector<OrderBookEntry>& source );
 
         /** OVERLOADED function for returning vector of Orders from this orderBook according to the sent filters
@@ -55,7 +55,7 @@ class OrderBook
          * arg3: product2 type
          * arg4: timestamp
         */
-        std::vector<OrderBookEntry> getOrders(  const dataSpace::OrderBookType& type,
+        std::vector<OrderBookEntry> getOrders(  const HelpersNameSpace::OrderBookType& type,
                                                 const std::string& product1,
                                                 const std::string& product2,
                                                 const std::string& timestamp,

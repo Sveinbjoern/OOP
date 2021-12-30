@@ -1,6 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <string>
+// #include <iostream>
+// #include <vector>
+// #include <string>
 #include "src\GameOfTrades.h"
 
 // using namespace std;
@@ -8,19 +8,8 @@
 int main(int argc, char *argv[])
 {     
 
-    std::vector<int> barmaid;
-    std::vector<std::string> barmaid2;
-    std::string faulty;
-    faulty.append("asdfs");
-    std::cout << faulty << "\n";
-    barmaid.push_back(23423);
-    barmaid2.push_back(faulty);
-
-    std::cout << barmaid[0];
-    std::cout << barmaid2[0];
-    std::cout << barmaid[0];
-    // GameOfTrades GoT{};
-    // GoT.init();
+    GameOfTrades GoT{};
+    GoT.init();
     return 0;
 }
 
@@ -29,6 +18,19 @@ int main(int argc, char *argv[])
 
 
 
+
+
+    // std::vector<int> barmaid;
+    // std::vector<std::string> barmaid2;
+    // std::string faulty;
+    // faulty.append("asdfs");
+    // std::cout << faulty << "\n";
+    // barmaid.push_back(23423);
+    // barmaid2.push_back(faulty);
+
+    // std::cout << barmaid[0];
+    // std::cout << barmaid2[0];
+    // std::cout << barmaid[0];
     // std::string start;
     // std::string csvLine = "";
     // char separator = ',';

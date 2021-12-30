@@ -46,12 +46,22 @@ std::ostream& operator<<(std::ostream& os, const Product& pr)
 /** Namespace for data to be shared across the program instead of it having global scope 
  * Stored in Helpers.h
 */
-namespace dataSpace
+namespace HelpersNameSpace
 {
     
     /**The enum OrderBookType available for every part of the app. Underlying values: ask: 0, bid:1 */
     enum class OrderBookType{ask,bid};
 
+    /**
+     * @brief Takes a string and transforms it to an upper case version
+     * Adapted from https://stackoverflow.com/questions/313970/how-to-convert-an-instance-of-stdstring-to-lower-case:
+     */
+    void toUpper(std::string &string)
+    {
+        // std::cout << string << "from toUpper" <<std::endl;
+        std::transform(string.begin(), string.end(), string.begin(),
+        [](unsigned char c){ return std::toupper(c); });
+    }
 
     // From https://stackoverflow.com/questions/8888748/how-to-check-if-given-c-string-or-char-contains-only-digits
     bool is_digits(const std::string &str)
@@ -62,15 +72,16 @@ namespace dataSpace
 
 
 
-/** ostream operator overload */ 
-std::ostream& operator<< (std::ostream& os, const dataSpace::OrderBookType& obj )
+/** ostream operator overload 
+ * makes it so that std::cout prints out a message giving a string of what kind of orderbooktype*/ 
+std::ostream& operator<< (std::ostream& os, const HelpersNameSpace::OrderBookType& obj )
 {
-    // std::cout << static_cast<std::underlying_type<dataSpace::OrderBookType>::type>(obj) << std::endl;
-    if (static_cast<std::underlying_type<dataSpace::OrderBookType>::type>(obj) == 0)
+    // std::cout << static_cast<std::underlying_type<HelpersNameSpace::OrderBookType>::type>(obj) << std::endl;
+    if (static_cast<std::underlying_type<HelpersNameSpace::OrderBookType>::type>(obj) == 0)
     {
         os << "OrderBookType::ask";
         return os;
-    } else if (static_cast<std::underlying_type<dataSpace::OrderBookType>::type>(obj) == 1)
+    } else if (static_cast<std::underlying_type<HelpersNameSpace::OrderBookType>::type>(obj) == 1)
     {
         os << "OrderBookType::bid"; 
         return os;

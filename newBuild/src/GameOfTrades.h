@@ -49,7 +49,7 @@ class GameOfTrades
 
         // void updateTime();
 
-        /* Functions to handle inputs that depend on menu*/
+        /** Functions to handle inputs that depend on menu*/
         void mainInput(std::string); 
         void optionsMenu();
 

@@ -12,7 +12,7 @@ class OrderBookEntry
     OrderBookEntry( std::string _dateTimeString,
                     Product _firstProduct,
                     Product _secondProduct,
-                    dataSpace::OrderBookType _typeOfEntry,
+                    HelpersNameSpace::OrderBookType _typeOfEntry,
                     double _price, 
                     double _amount);
 
@@ -26,7 +26,7 @@ class OrderBookEntry
     std::string dateTimeString;
 
     //Meta dat
-    dataSpace::OrderBookType typeOfEntry;
+    HelpersNameSpace::OrderBookType typeOfEntry;
     Product firstProduct;
     Product secondProduct;
 

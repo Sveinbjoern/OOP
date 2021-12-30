@@ -1,24 +1,24 @@
-// #include "src\GameOfTrades.h"
+#include "src\GameOfTrades.h"
 
 
 
-#include <string>
+// #include <string>
 
-#include <iostream>
-#include <type_traits>
-#include "src\Helpers.h"
-#include "src\OrderBook.h"
-#include "src\CSVReader.h"
-#include "src\OrderBookEntry.h"
-#include <vector>
+// #include <iostream>
+// #include <type_traits>
+// #include "src\Helpers.h"
+// #include "src\OrderBook.h"
+// #include "src\CSVReader.h"
+// #include "src\OrderBookEntry.h"
+// #include <vector>
 
 int main(int argc, char *argv[])
 {
-    std::string fart;
-    std::vector<int> barmaid;
-    barmaid.push_back(324345);
-    std::cout << barmaid[0];
-    std::cin >> fart;
+    // std::string fart;
+    // std::vector<int> barmaid;
+    // barmaid.push_back(324345);
+    // std::cout << barmaid[0];
+    // std::cin >> fart;
 
     // std::string start;
     // std::string csvLine = "";
@@ -29,15 +29,15 @@ int main(int argc, char *argv[])
     // std::cout << start << std::endl;
 
 
-    // GameOfTrades GoT{};
-    // GoT.init();
+    GameOfTrades GoT{};
+    GoT.init();
    
     
-    // dataSpace::OrderBookType sjdhfk = dataSpace::OrderBookType::ask;
-    // dataSpace::OrderBookType sjdhfk2 = dataSpace::OrderBookType::bid;
-    // dataSpace::OrderBookType sjdhfk3 = dataSpace::OrderBookType::ask;
-    // dataSpace::OrderBookType sjdhfk4 = dataSpace::OrderBookType::bid;
-    // dataSpace::OrderBookType sjdhfk5 = dataSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk = HelpersNameSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk2 = HelpersNameSpace::OrderBookType::bid;
+    // HelpersNameSpace::OrderBookType sjdhfk3 = HelpersNameSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk4 = HelpersNameSpace::OrderBookType::bid;
+    // HelpersNameSpace::OrderBookType sjdhfk5 = HelpersNameSpace::OrderBookType::ask;
 
     // std::cout << sjdhfk << std::endl;
     // std::cout << sjdhfk2 << std::endl;

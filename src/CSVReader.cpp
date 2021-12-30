@@ -1,4 +1,3 @@
-#include "CSVReader.h"
 #include <fstream>
 #include <vector>
 #include <iostream>
@@ -8,10 +7,14 @@
 #include <cctype>
 
 
+#include "CSVReader.h"
+
+
 
 
 void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBook& orderBook)
 {
+    std::cout << "Errorlog for ";
     std::cout << documentName << std::endl;
     unsigned int n = 1;
     std::vector<OrderBookEntry> entries;
@@ -27,7 +30,7 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
         {
             try 
             {
-                entries.push_back(CSVReader::CheckValidData__ParseOBE(line,  documentName,orderBook, true));
+                entries.push_back(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
             } catch(const std::exception& e)
             {
                 std::cout << "CSVReader::readCSV failed to parse linenumber: " << n  << " from "<< documentName << std::endl;
@@ -49,7 +52,7 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
     // std::cout << entries[3].price << std::endl;
     // std::cout << entries[3].amount << std::endl;
 
-    std::cout << "CSVReader::readCSV read " << entries.size() << " entries"  << std::endl;
+    std::cout << "CSVReader::readCSV created " << entries.size() << " approved entries"  << std::endl;
 }   
 //     std::string csvFilename{"data/20200317T3.csv"};
 //     std::ifstream csvFile{csvFilename};
@@ -86,7 +89,7 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
 //     return OrderBookEntry obe (20,123,23,23,23)
 // }
 
-OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, const std::string& documentName, OrderBook& orderBook, const bool add )
+OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook& orderBook, const bool add )
 {
 
     std::vector<std::string> tokens;
@@ -94,7 +97,7 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, const std:
     Product product1;
     Product product2;
     std::vector<std::string> products;
-    dataSpace::OrderBookType OBT;
+    HelpersNameSpace::OrderBookType OBT;
     std::vector<std::string> number;
     double price;
     double amount;
@@ -125,10 +128,10 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, const std:
         
         if (tokens[2] == "ask")
         {
-            OBT = dataSpace::OrderBookType::ask;
+            OBT = HelpersNameSpace::OrderBookType::ask;
         } else if (tokens[2] == "bid")
         {
-            OBT = dataSpace::OrderBookType::bid;
+            OBT = HelpersNameSpace::OrderBookType::bid;
         } else {throw std::invalid_argument( "Order book type has to be bid or ask" );}
 
         number = CSVReader::tokenize(tokens[3], '.');
@@ -140,13 +143,13 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, const std:
        
         if (number.size() == 1)
         {
-            if (dataSpace::is_digits(number[0]))
+            if (HelpersNameSpace::is_digits(number[0]))
             {
                 price = std::stod(tokens[3]);
             } else {throw std::invalid_argument( "Invalid number for price: non numeric values" );}
         } else if (number.size() == 2)
         {
-            if (dataSpace::is_digits(number[0]) &&  dataSpace::is_digits(number[1]))
+            if (HelpersNameSpace::is_digits(number[0]) &&  HelpersNameSpace::is_digits(number[1]))
             {
                 price = std::stod(tokens[3]);
             } else {throw std::invalid_argument( "Invalid number for price: non numeric values" );}
@@ -156,13 +159,13 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, const std:
         number = CSVReader::tokenize(tokens[4], '.');
         if (number.size() == 1)
         {
-            if (dataSpace::is_digits(number[0]))
+            if (HelpersNameSpace::is_digits(number[0]))
             {
                 amount = std::stod(tokens[4]);
             } else {throw std::invalid_argument( "Invalid number for amount: non numeric values" );}
         } else if (number.size() == 2)
         {
-            if (dataSpace::is_digits(number[0]) &&  dataSpace::is_digits(number[1]))
+            if (HelpersNameSpace::is_digits(number[0]) &&  HelpersNameSpace::is_digits(number[1]))
             {
                 amount = std::stod(tokens[4]);
             } else {throw std::invalid_argument( "Invalid number for amount: non numeric values" );}

@@ -28,11 +28,11 @@ int main(int argc, char *argv[])
     // GoT.init();
     OrderBook orderbook;
     CSVReader::readDocumentLineByLine("data\\20200317T3.csv", orderbook );
-    // dataSpace::OrderBookType sjdhfk = dataSpace::OrderBookType::ask;
-    // dataSpace::OrderBookType sjdhfk2 = dataSpace::OrderBookType::bid;
-    // dataSpace::OrderBookType sjdhfk3 = dataSpace::OrderBookType::ask;
-    // dataSpace::OrderBookType sjdhfk4 = dataSpace::OrderBookType::bid;
-    // dataSpace::OrderBookType sjdhfk5 = dataSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk = HelpersNameSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk2 = HelpersNameSpace::OrderBookType::bid;
+    // HelpersNameSpace::OrderBookType sjdhfk3 = HelpersNameSpace::OrderBookType::ask;
+    // HelpersNameSpace::OrderBookType sjdhfk4 = HelpersNameSpace::OrderBookType::bid;
+    // HelpersNameSpace::OrderBookType sjdhfk5 = HelpersNameSpace::OrderBookType::ask;
 
     // std::cout << sjdhfk << std::endl;
     // std::cout << sjdhfk2 << std::endl;

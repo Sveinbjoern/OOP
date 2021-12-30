@@ -193,6 +193,7 @@ void GameOfTrades::mainInput(std::string overText)
         GameOfTrades::mainInput(text);
     }
 } 
+
 void GameOfTrades::optionsMenu()
 {
     
