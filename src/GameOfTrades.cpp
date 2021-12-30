@@ -73,12 +73,16 @@ void GameOfTrades::init(){
     // std::cout << std::endl << userInputText << std::endl;
     menuText.append("For errorlog see above\n\n");
     menuText.append(advisorName);
-    menuText.append("> Please enter command, or type help for list of commands");
+    menuText.append("> Please enter command, or type \"help\" for a list of commands");
 
+    std::cout << advisorName << "> ";
+    menuText = mainInput(menuText);
+    
     // GameOfTrades::printIntroduction();
     while (userInputText != "QUIT" && userInputText != "EXIT")
     {
-        // std::cout << userInputText;
+        clearScreen();
+        std::cout << advisorName << "> ";
         menuText = mainInput(menuText);
         // getUserInputMainMenu(userInputInt);
     }
@@ -250,15 +254,18 @@ std::string GameOfTrades::helpText()
     text.append("All available commands:\n");
     text.append("help: this list\n");
     text.append("help CMD: You can get help with the individual command by\n");
-    text.append("writing help followed by the command.\n");
-    text.append("min: \n");
-    text.append("max: \n");
-    text.append("avg: \n");
+    text.append("          writing help followed by the command.\n");
+    text.append("min: display minimum bid or ask for a product pair.\n");
+    text.append("max: display maximum bid or ask for a product pair.\n");
+    text.append("avg: display average bid or ask for a product pair\n");
+    text.append("     for a given timesteps back.\n");
     text.append("prod: Lists all available product\n");
-    text.append("predict: \n");
-    text.append("time: \n");
-    text.append("step: \n");
-    text.append("advice: \n");
+    text.append("predict: predicts the minimum or maximum, ask or bid\n");
+    text.append("         for a product pair.\n");
+    text.append("time: Gives current timestep\n");
+    text.append("step: Moves to the next timestep.\n");
+    text.append("advice: Gives advice on what to bid or ask\n");
+    text.append("        for the next timestep.\n");
     text.append("exit/quit: ends the program. \n");
     return text;
 }
@@ -268,35 +275,80 @@ std::string GameOfTrades::helpCMD(std::string &command)
     std::string text;
     if (command == "HELP")
     {
-        text.append("Help gives the help menu\n");
+        text.append("Takes another command as an argument.\n");
+        text.append("Default gives you a list of all arguments.\n");
         text.append("Haven't you seen it already?\n");
+
         return text;
     } else if (command == "MIN")
     {
-        text.append("Min gives \n");
-        text.append("Haven't you seen it already?\n");
+        text.append("Takes a product pair seperated with \"/\" \n");
+        text.append("as its first argument. \n");
+        text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
+        text.append("Default gives both ask and bid.\n");
+        text.append("Example line: min ETH/BTC ask\n");
+        text.append("Example answer: The minimum ask for ETH/BTC is 1.0\n");
+
         return text;
     } else if (command == "MAX")
     {
+        text.append("Takes a product pair seperated with \"/\" \n");
+        text.append("as its first argument. \n");
+        text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
+        text.append("Default gives both ask and bid.\n");
+        text.append("Example line: max ETH/BTC ask\n");
+        text.append("Example answer: The maximum ask for ETH/BTC is 1.0\n");
 
+        return text;
     } else if (command == "AVG")
     {
+        text.append("Takes a product pair seperated with \"/\" \n");
+        text.append("as its first argument. \n");
+        text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
+        text.append("Default gives both ask and bid.\n");
+        text.append("Takes a number of steps back as its third argument.\n");
+        text.append("Default gives 10 steps.\n");
+        text.append("Example line: avg ETH/BTC ask 10\n");
+        text.append("Example answer: The average ask for ETH/BTC\n");
+        text.append("over the last 10 timesteps is 1.0\n");
 
+        return text;
     } else if (command == "PROD")
     {
+        text.append("Does not take any arguments.\n");
+        text.append("Lists all availble products.\n");
 
+        return text;
     } else if (command == "PREDICT")
     {
+        text.append("Takes \"max\" or \"min\" as its first argument.\n");
+        text.append("Default gives both max and min.\n");
+        text.append("Takes a product pair seperated with \"/\" \n");
+        text.append("as its second argument. \n");
+        text.append("Takes \"bid\" or \"ask\" as its third argument.\n");
+        text.append("Default gives both ask and bid.\n");
+        text.append("Example line: predict max ETH/BTC ask\n");
+        text.append("Example answer: The expected maximum ask for ETH/BTC is 1.0\n");
 
+        return text;
     } else if (command == "TIME")
     {
+        text.append("Does not take any arguments.\n");
+        text.append("Prints current timeframe.\n");
 
+        return text;
     } else if (command == "STEP")
     {
+        text.append("Does not take any arguments.\n");
+        text.append("Moves current timeframe one step forward.\n");
 
+        return text;
     } else if (command == "ADVICE")
     {
+        text.append("Does not take any arguments.\n");
+        text.append("Gives advice on what to ask/bid for next timeframe.\n");
 
+        return text;
     } else if (command == "EXIT")
     {
         text.append("exit or quit ends the program\n");
@@ -304,6 +356,7 @@ std::string GameOfTrades::helpCMD(std::string &command)
     } else if (command == "QUIT")
     {
         text.append("quit or exit ends the program\n");
+        return text;
     } else 
     {
         text.append(command);
