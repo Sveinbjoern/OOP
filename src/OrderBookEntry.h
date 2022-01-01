@@ -9,6 +9,8 @@ class OrderBookEntry
 {
     public: // parts of the class that can be seen from outside
     
+    OrderBookEntry() = default;
+
     OrderBookEntry( std::string _dateTimeString,
                     Product _firstProduct,
                     Product _secondProduct,

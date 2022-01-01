@@ -17,6 +17,7 @@ class OrderBook
         OrderBook() = default;
 
 
+        int orderCount();
 
 
 
@@ -87,27 +88,40 @@ class OrderBook
         */
         bool isInSetOfProducts( std::string s);
 
-        /** funciton that checks if a string is in the setOfProducts of this objects orderbook 
-         * arg1: The string to check
+        /** funciton that prints setOfProducts of this objects orderbook 
+         * Does not take any arguments.
         */
         void printSetOfProducts();
+       
+        /** funciton that returns if a vector of string with every product in this objects orderbook 
+          * Does not take any arguments.
+        */
+        std::vector<std::string> getVectorOfProducts();
 
         
+
+        /** Put an order in the private orders vector*/
+        void addOrderBookEntry( OrderBookEntry entry);
+
+
+        /**if setup has not been run before */
+        void setupOrderbook();
+
+    private:
         /** Load the set of currentBids and currentAsks for the currentTime
          * Should be loaded once every time movement.
         */
         void loadCurrentEntries();
 
-        /** Put an order in the private orders vector*/
-        void addOrderBookEntry( OrderBookEntry& entry);
-
-    private:
        // Set of all stored values
         std::vector<OrderBookEntry> orders;
         std::vector<OrderBookEntry> currentBids;
         std::vector<OrderBookEntry> currentAsks;
         std::string currentTime;
+        int currentEntryIndex;
         std::set<std::string> setOfProducts;
         std::set<std::string>::iterator setIterator;
+
+        bool setup = false;
 };
 

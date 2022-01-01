@@ -30,7 +30,8 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
         {
             try 
             {
-                entries.push_back(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
+                orderBook.addOrderBookEntry(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
+                // entries.push_back(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
             } catch(const std::exception& e)
             {
                 std::cout << "CSVReader::readCSV failed to parse linenumber: " << n  << " from "<< documentName << std::endl;
@@ -41,9 +42,7 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
             ++n;
         }// end of while
          
-         //print out every product in set of Products after loading in the files.
-        
-        orderBook.printSetOfProducts();
+      
 
     } else{
         std::cout << "CSVReader::readCSV could not read file: "  << documentName << std::endl;
@@ -52,7 +51,8 @@ void CSVReader::readDocumentLineByLine(const std::string& documentName, OrderBoo
     // std::cout << entries[3].price << std::endl;
     // std::cout << entries[3].amount << std::endl;
 
-    std::cout << "CSVReader::readCSV created " << entries.size() << " approved entries"  << std::endl;
+
+    std::cout << "CSVReader::readCSV created " << orderBook.orderCount() << " approved entries"  << std::endl;
 }   
 //     std::string csvFilename{"data/20200317T3.csv"};
 //     std::ifstream csvFile{csvFilename};

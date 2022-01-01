@@ -66,16 +66,21 @@ void GameOfTrades::init(){
     // setup: neccessary files loaded. 
     CSVReader::readDocumentLineByLine( "data\\20200317T3.csv", orderBook );
     
-   
+    //print out every product in set of Products after loading in the files.
+    orderBook.printSetOfProducts();
+
+    //setup files in the orderBook
+    orderBook.setupOrderbook();
+
 
     // getUserInputLine(userInputText);
     // getUserInputLine("Beautiful");
     // std::cout << std::endl << userInputText << std::endl;
     menuText.append("For errorlog see above\n\n");
-    menuText.append(advisorName);
-    menuText.append("> Please enter command, or type \"help\" for a list of commands");
+    menuText.append(advisorString());
+    menuText.append(standardAdvisorString());
 
-    std::cout << advisorName << "> ";
+    std::cout << advisorString();
     menuText = mainInput(menuText);
     
     // GameOfTrades::printIntroduction();
@@ -253,19 +258,16 @@ std::string GameOfTrades::helpText()
     std::string text;
     text.append("All available commands:\n");
     text.append("help: this list\n");
-    text.append("help CMD: You can get help with the individual command by\n");
+    text.append("help CMD: You can get help with an individual command by\n");
     text.append("          writing help followed by the command.\n");
     text.append("min: display minimum bid or ask for a product pair.\n");
     text.append("max: display maximum bid or ask for a product pair.\n");
-    text.append("avg: display average bid or ask for a product pair\n");
-    text.append("     for a given timesteps back.\n");
+    text.append("avg: display average bid or ask for a product pair for some steps back\n");
     text.append("prod: Lists all available product\n");
-    text.append("predict: predicts the minimum or maximum, ask or bid\n");
-    text.append("         for a product pair.\n");
+    text.append("predict: predicts the minimum or maximum, ask or bid for products\n");
     text.append("time: Gives current timestep\n");
     text.append("step: Moves to the next timestep.\n");
     text.append("advice: Gives advice on what to bid or ask\n");
-    text.append("        for the next timestep.\n");
     text.append("exit/quit: ends the program. \n");
     return text;
 }
@@ -275,6 +277,7 @@ std::string GameOfTrades::helpCMD(std::string &command)
     std::string text;
     if (command == "HELP")
     {
+        text.append("The \"help\" command:\n");
         text.append("Takes another command as an argument.\n");
         text.append("Default gives you a list of all arguments.\n");
         text.append("Haven't you seen it already?\n");
@@ -282,6 +285,7 @@ std::string GameOfTrades::helpCMD(std::string &command)
         return text;
     } else if (command == "MIN")
     {
+        text.append("The \"min\" command:\n");
         text.append("Takes a product pair seperated with \"/\" \n");
         text.append("as its first argument. \n");
         text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
@@ -292,6 +296,7 @@ std::string GameOfTrades::helpCMD(std::string &command)
         return text;
     } else if (command == "MAX")
     {
+        text.append("The \"max\" command:\n");
         text.append("Takes a product pair seperated with \"/\" \n");
         text.append("as its first argument. \n");
         text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
@@ -302,6 +307,7 @@ std::string GameOfTrades::helpCMD(std::string &command)
         return text;
     } else if (command == "AVG")
     {
+        text.append("The \"avg\" command:\n");
         text.append("Takes a product pair seperated with \"/\" \n");
         text.append("as its first argument. \n");
         text.append("Takes \"bid\" or \"ask\" as its second argument.\n");
@@ -315,12 +321,14 @@ std::string GameOfTrades::helpCMD(std::string &command)
         return text;
     } else if (command == "PROD")
     {
+        text.append("The \"prod\" command:\n");
         text.append("Does not take any arguments.\n");
         text.append("Lists all availble products.\n");
 
         return text;
     } else if (command == "PREDICT")
     {
+        text.append("The \"predict\" command:\n");
         text.append("Takes \"max\" or \"min\" as its first argument.\n");
         text.append("Default gives both max and min.\n");
         text.append("Takes a product pair seperated with \"/\" \n");
@@ -333,28 +341,33 @@ std::string GameOfTrades::helpCMD(std::string &command)
         return text;
     } else if (command == "TIME")
     {
+        text.append("The \"time\" command:\n");
         text.append("Does not take any arguments.\n");
         text.append("Prints current timeframe.\n");
 
         return text;
     } else if (command == "STEP")
     {
+        text.append("The \"step\" command:\n");
         text.append("Does not take any arguments.\n");
         text.append("Moves current timeframe one step forward.\n");
 
         return text;
     } else if (command == "ADVICE")
     {
+        text.append("The \"advice\" command:\n");
         text.append("Does not take any arguments.\n");
         text.append("Gives advice on what to ask/bid for next timeframe.\n");
 
         return text;
     } else if (command == "EXIT")
     {
+        text.append("The \"exit\" command:\n");
         text.append("exit or quit ends the program\n");
         return text;
     } else if (command == "QUIT")
     {
+        text.append("The \"quit\" command:\n");
         text.append("quit or exit ends the program\n");
         return text;
     } else 
@@ -367,11 +380,61 @@ std::string GameOfTrades::helpCMD(std::string &command)
     return text;
 }
 
+std::string GameOfTrades::standardAdvisorString()
+{
+    std::string returnString;
+    returnString.append("Please enter command, or type \"help\" for list of commands");
+    return returnString;
+}
+
+std::string GameOfTrades::advisorString()
+{
+    std::string returnString;
+    returnString.append(advisorName);
+    returnString.append("> ");
+    return returnString;
+}
+
+
 std::string GameOfTrades::mainInput(std::string overText)
 {
     std::cout << overText << std::endl;
     GameOfTrades::getUserInputLine(userInputText);
     std::vector<std::string> tokens = CSVReader::tokenize(userInputText, ' ');
+
+    /**lambda functions for the function GameOfTrades::mainInput  
+     * creates the return string for inputs min and max
+    */
+    auto lamMinMaxString = [&](std::string minOrMax)
+    {
+        std::string returnString;
+        if (tokens.size() == 1)
+        {
+            returnString = helpCMD(minOrMax);
+        } else
+        {
+            std::vector<std::string> products = CSVReader::tokenize(tokens[1], '/')
+            if ( products.size() == 1)
+            {
+                
+            }
+             try 
+            {
+                
+                // orderBook.addOrderBookEntry(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
+                // entries.push_back(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
+            } catch(const std::exception& e)
+            {
+                returnString.append()
+
+                
+                std::cerr << "exception: " << e.what() << std::endl;
+            }
+        }
+        
+        return returnString;
+    };
+   
 
     if (tokens.size() > 0)
     {
@@ -391,16 +454,30 @@ std::string GameOfTrades::mainInput(std::string overText)
 
         } else if (tokens[0] == "MIN")
         {
-
+            overText = "MIN";
+            return lamMinMaxString(overText);
         } else if (tokens[0] == "MAX")
         {
-
+            overText = "MAX";
+            return lamMinMaxString(overText);
         } else if (tokens[0] == "AVG")
         {
 
         } else if (tokens[0] == "PROD")
         {
-
+            std::vector<std::string> products;
+            products = orderBook.getVectorOfProducts();
+            overText = "";
+            overText.append("All available products:\n");
+            for (std::string prod : products)
+            {
+                overText.append(prod);
+                overText.append("\n");
+            }
+            overText.append("");
+            overText.append(advisorString());
+            overText.append(standardAdvisorString());
+            return overText;
         } else if (tokens[0] == "PREDICT")
         {
 
@@ -431,10 +508,10 @@ std::string GameOfTrades::mainInput(std::string overText)
         } else
         {
             overText = "";
-            overText.append(advisorName);
-            overText.append("> ");
+            overText.append(advisorString());
             overText.append(tokens[0]);
-            overText.append(" is not a valid command. Please enter command, or type help for list of commands");
+            overText.append(" is not a valid command. ");
+            overText.append(standardAdvisorString());
             return overText;
         }
             
@@ -442,11 +519,14 @@ std::string GameOfTrades::mainInput(std::string overText)
     } else 
     {
         overText = "";
-        overText.append(advisorName);
-        overText.append("> Please enter command, or type help for list of commands");
+        overText.append(advisorString());
+        overText.append(standardAdvisorString());
 
         return overText;
     }
     overText = "";
     return overText;
-} 
+
+
+
+}

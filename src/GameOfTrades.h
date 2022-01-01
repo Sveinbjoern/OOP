@@ -55,6 +55,13 @@ class GameOfTrades
         /**creates the response for indivdual help for commands*/
         std::string helpCMD(std::string &command);
 
+        /**gives the standard advisor output as a string
+         * returns advisorName + ""
+        */
+        std::string standardAdvisorString();
+        std::string advisorString();
+
+        
         /**returns the text for the help menu*/
         std::string helpText();
         void printStatsMenu();
@@ -65,7 +72,10 @@ class GameOfTrades
 
         void updateTime();
 
-        /** Functions to handle inputs that depend on menu*/
+        /** Functions to handle inputs that depend on menu
+         * has subfunctions:
+         * 
+        */
         std::string mainInput(std::string); 
 
           /** Gets input from user. Chnanges the string userInputText*/
