@@ -61,12 +61,33 @@ class OrderBook
                                                 const std::string& product2,
                                                 const std::string& timestamp,
                                                 const std::vector<OrderBookEntry>& source );
+        /** OVERLOADED function for returning vector of Orders from this orderBook according to the sent filters
+         * arg1: type
+         * arg2: product1 type
+         * arg3: product2 type
+         * arg4: Source
+        */
+        // std::vector<OrderBookEntry> getOrders(  const HelpersNameSpace::OrderBookType& type,
+        //                                         const std::string& product1,
+        //                                         const std::string& product2,
+        //                                         const std::string& timestamp,
+        //                                         const std::vector<OrderBookEntry>& source );
 
-        /** return the price of the highest bid in the sent set */
-        static double getHighPrice(std::vector<OrderBookEntry>& orders);
-        /** return the price of the lowest bid in the sent set */
-        static double getLowPrice(std::vector<OrderBookEntry>& orders);
+
+
+
         
+        
+        /** return the price of the highest bid in the sent set */
+        // static double getHighPrice(std::string minOrMax);
+        /** return the price of the lowest bid in the sent set */
+        double getHighOrLowPriceAsk(std::string &minOrMax, Product &one, Product &two);
+        double getHighOrLowPriceBid(std::string &minOrMax, Product &one, Product &two);
+
+        /** returns a copy of the private variable setupHasRun */
+        bool get_setupHasRun();
+
+
          /** return vector of all know products in the dataset*/
         std::vector<Products> getKnownProducts();
 
@@ -114,6 +135,7 @@ class OrderBook
         void loadCurrentEntries();
 
        // Set of all stored values
+
         std::vector<OrderBookEntry> orders;
         std::vector<OrderBookEntry> currentBids;
         std::vector<OrderBookEntry> currentAsks;
@@ -121,7 +143,8 @@ class OrderBook
         int currentEntryIndex;
         std::set<std::string> setOfProducts;
         std::set<std::string>::iterator setIterator;
+        std::set<std::string> allTimeSteps;
 
-        bool setup = false;
+        bool setupHasRun = false;
 };
 

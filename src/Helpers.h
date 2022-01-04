@@ -28,10 +28,13 @@ class Product
     public:
     
 
-        Product(std::string s, OrderBook& orderBook, bool add);
+        Product(std::string s, OrderBook& orderBook);
+        
+        void set(std::string s, OrderBook& orderBook);
 
         Product() = default; 
         
+        std::string get_type();
 
         friend std::ostream& operator<<(std::ostream& os, const Product& pr); 
 };
@@ -67,6 +70,32 @@ namespace HelpersNameSpace
     bool is_digits(const std::string &str)
     {
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
+    }
+
+    /**Convert a double to string with greater precission than to_stirng
+        https://stackoverflow.com/questions/20196351/convert-double-to-string-keeping-high-precision-of-the-digits-c/20215087*/
+    std::string doubleToStringPresicion(const double & value)
+    {
+        //Original code
+        // double digits = 1.12345123451234;
+        // char buff[100];
+        // sprintf(buff, "%1.14f", digits);
+        // std::string a(buff);
+    
+        
+        char buff[100];
+        sprintf(buff, "%1.14f", value);
+        std::string returnString(buff);
+        // if (returnString.back() == '0')
+        // {
+             returnString.erase( returnString.find_last_not_of('0')+1, returnString.size()-1);
+        // }
+        if (returnString.back() == '.')
+        {
+            returnString.erase(returnString.size()-1);
+        }
+        return returnString;
+
     }
 };
 

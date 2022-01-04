@@ -134,7 +134,10 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook&
             OBT = HelpersNameSpace::OrderBookType::bid;
         } else {throw std::invalid_argument( "Order book type has to be bid or ask" );}
 
+
         number = CSVReader::tokenize(tokens[3], '.');
+         
+        //  std::cout << "p" << tokens[3];
         // for (std::string& s : number)
         // {
         //     std::cout << s << std::endl;
@@ -145,13 +148,20 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook&
         {
             if (HelpersNameSpace::is_digits(number[0]))
             {
+                
+                // std::cout << "p" << tokens[3];
                 price = std::stod(tokens[3]);
+
+                // std:cout.precision(15);
+                std::cout << "p" << price;
             } else {throw std::invalid_argument( "Invalid number for price: non numeric values" );}
         } else if (number.size() == 2)
         {
             if (HelpersNameSpace::is_digits(number[0]) &&  HelpersNameSpace::is_digits(number[1]))
             {
+                //  std::cout << "p" << tokens[3];
                 price = std::stod(tokens[3]);
+
             } else {throw std::invalid_argument( "Invalid number for price: non numeric values" );}
 
         } else {throw std::invalid_argument( "Invalid number for price: more than one '.'" );}
@@ -172,6 +182,7 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook&
 
         } else {throw std::invalid_argument( "Invalid number for amount: more than one '.'" );}
 
+
         //Adapted from https://stackoverflow.com/questions/313970/how-to-convert-an-instance-of-stdstring-to-lower-case:
         std::transform(tokens[1].begin(), tokens[1].end(), tokens[1].begin(),
         [](unsigned char c){ return std::toupper(c); });
@@ -184,8 +195,11 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook&
         {
             if (products[0] != "" && products[1] != "")
             {
-                Product product1(products[0], orderBook,add);
-                Product product2(products[1], orderBook,add);
+                OrderBook::addToSetOfProducts(orderBook,products[0]);
+                OrderBook::addToSetOfProducts(orderBook,products[1]);
+                product1.set(products[0], orderBook);
+                product2.set(products[1], orderBook);
+                // std::cout << product1.get_type();
 
             } else {throw std::invalid_argument( "Product cannot be empty" );}
 
@@ -195,10 +209,14 @@ OrderBookEntry CSVReader::CheckValidData__ParseOBE(std::string& line, OrderBook&
     // products = CSVReader::tokenize(tokens[1], '/');
     // orderBook.addToSetOfProducts(products[0]);
     // orderBook.addToSetOfProducts(products[1]);
-    
+    //  std::cout << "prod1" << product1.get_type();
 
-    OrderBookEntry OBE( s ,product1,product1,OBT ,price,amount );
+
+
+    OrderBookEntry OBE( s ,product1,product2,OBT ,price,amount );
     // if(n >= 2) break;
+    std::cout.precision(20);
+     std::cout << std::fixed << "p" << price;
     return OBE;
     
 }

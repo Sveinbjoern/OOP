@@ -1,22 +1,33 @@
 #include "Helpers.h"
 
 
-Product::Product(std::string s, OrderBook& orderBook, bool add)
+Product::Product(std::string s, OrderBook& orderBook)
 {
-    if (add)
+    
+    if (orderBook.isInSetOfProducts(s))
     {
-        orderBook.addToSetOfProducts(s);
         type = s;
     } else
     {
-        if (orderBook.isInSetOfProducts(s))
-        {
-            type = s;
-        } else{
-            throw std::invalid_argument( s.append( " is not a valid product. Product::Constructor") );
-        }
-    }
+        throw std::invalid_argument( s.append( " is not a valid product. Product::Constructor") );
+    }   
     
+}
+
+void Product::set(std::string s, OrderBook& orderBook)
+{
+     if (orderBook.isInSetOfProducts(s))
+    {
+        type = s;
+    } else
+    {
+        throw std::invalid_argument( s.append( " is not a valid product. Product::Constructor") );
+    }   
+}
+
+std::string Product::get_type()
+{
+    return type;
 }
 
 

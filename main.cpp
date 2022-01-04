@@ -2,6 +2,7 @@
 
 
 
+
 // #include <string>
 
 // #include <iostream>
@@ -27,6 +28,9 @@ int main(int argc, char *argv[])
     // start = csvLine.find_first_not_of(separator, 0);
 
     // std::cout << start << std::endl;
+
+
+    
 
 
     GameOfTrades GoT{};

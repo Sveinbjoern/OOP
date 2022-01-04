@@ -12,7 +12,14 @@ OrderBook::OrderBook(const std::string& filename)
 
 void OrderBook::addToSetOfProducts(OrderBook& orderBook,std::string s)
 {
-    orderBook.addToSetOfProducts(s);
+    if (!orderBook.get_setupHasRun())
+    {
+        orderBook.addToSetOfProducts(s);
+    } else
+    {
+    
+    }
+    
 }
 
 void OrderBook::addToSetOfProducts(std::string s)
@@ -34,6 +41,127 @@ void OrderBook::printSetOfProducts()
         std::cout << *setIterator << std::endl; // Note the "*" here
     } 
 }
+
+double OrderBook::getHighOrLowPriceBid(std::string &minOrMax, Product &Pone, Product &Ptwo)
+{
+    
+    if (minOrMax == "MIN")
+    {
+        //set the price to zero so that any price will be higher
+        double min = std::numeric_limits<double>::infinity();
+        for (OrderBookEntry x : currentBids)
+        {
+            if (x.firstProduct.get_type() == Pone.get_type())
+            {
+                if (x.secondProduct.get_type() == Ptwo.get_type())
+                {
+                    std::cout << "firstProduct " << x.firstProduct.get_type() << " secondProduct " << x.secondProduct.get_type() << std::endl;
+                    // std::cout << x.price << std::endl;
+                    if (x.price < min)
+                    {
+                        min = x.price;
+                    }
+                }
+            }
+
+        }
+        return min;
+    } else if (minOrMax == "MAX")
+    {
+        //set the max value to an extreme so that any actual price will be lower
+        double max = 0.0;
+        for (OrderBookEntry x : currentBids)
+        {
+            if (x.firstProduct.get_type() == Pone.get_type())
+            {
+                if (x.secondProduct.get_type() == Ptwo.get_type())
+                {
+                    // std::cout << x.price << std::endl;
+                    if (x.price > max)
+                    {
+                        std::cout << "firstProduct " << x.firstProduct.get_type() << " secondProduct " << x.secondProduct.get_type() << std::endl;
+                        max = x.price;
+                    }
+                }
+            }
+
+        }
+        return max;
+    } else
+    {
+        std::cout << "Error. Wrong \"minOrMax\" element passed to OrderBook::getHighOrLowPriceAsk" << std::endl;
+        return 0.0;
+    }
+}
+
+double OrderBook::getHighOrLowPriceAsk(std::string& minOrMax, Product& Pone, Product& Ptwo)
+{
+    if (minOrMax == "MIN")
+    {
+        double min = std::numeric_limits<double>::infinity();
+        std::cout << "less than infinity " << ( 9999999999999 < min);
+        for (OrderBookEntry x : currentAsks)
+        {
+            if (x.firstProduct.get_type() == Pone.get_type())
+            {
+                if (x.secondProduct.get_type() == Ptwo.get_type())
+                {
+                    // std::cout << x.price << std::endl;
+                    if (x.price < min)
+                    {
+                        std::cout << "firstProduct " << x.firstProduct.get_type() << " secondProduct " << x.secondProduct.get_type() << std::endl;
+                        min = x.price;
+                    }
+                }
+            }
+
+        }
+        return min;
+    } else if (minOrMax == "MAX")
+    {
+        double max = 0.0;
+        
+        
+        
+        
+
+        // std::cout << "max value before funct: " << max << std::endl;
+        // std::cout << "max > 999999999 value before f: " << (max > 999999999) << std::endl;
+
+        // for (OrderBookEntry x : currentAsks)
+        // {
+        //     std::cout << "stored product:";
+        //     std::cout << x.firstProduct.get_type();
+        //     std::cout << x.secondProduct.get_type();
+        // }
+
+        for (OrderBookEntry x : currentAsks)
+        {
+            if (x.firstProduct.get_type() == Pone.get_type())
+            {
+                if (x.secondProduct.get_type() == Ptwo.get_type())
+                {
+                    // std::cout << x.price << std::endl;
+                    if (x.price > max)
+                    {
+                        std::cout << "firstProduct " << x.firstProduct.get_type() << " secondProduct " << x.secondProduct.get_type() << std::endl;
+                        max = x.price;
+                    }
+                }
+            }
+
+        }
+         std::cout << "max value after funct: " << max << std::endl;
+        return max;
+    } else
+    {
+        std::cout << "Error. Wrong \"minOrMax\" element passed to OrderBook::getHighOrLowPriceAsk" << std::endl;
+        return 0.0;
+    }
+
+    
+}
+
 std::vector<std::string> OrderBook::getVectorOfProducts()
 {
     std::vector<std::string> returnVector;
@@ -56,7 +184,7 @@ void OrderBook::addOrderBookEntry( OrderBookEntry entry)
 
 void OrderBook::setupOrderbook()
 {
-    if (!setup)
+    if (!setupHasRun)
     {
         // std::cout << orders.size() << std::endl;
         // for (OrderBookEntry x :orders)
@@ -118,7 +246,7 @@ void OrderBook::setupOrderbook()
         // std::vector<OrderBookEntry> currentBids;
         // std::vector<OrderBookEntry> currentAsks;
 
-        setup = true;
+        setupHasRun = true;
     } else
     {
         std::cout << "Error: Setup cannot be run more than once!" << std::endl;
@@ -141,4 +269,9 @@ void OrderBook::setupOrderbook()
 int OrderBook::orderCount()
 {
     return orders.size();
+}
+
+bool OrderBook::get_setupHasRun()
+{
+    return setupHasRun;
 }

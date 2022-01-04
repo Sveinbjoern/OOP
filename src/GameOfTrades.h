@@ -60,7 +60,7 @@ class GameOfTrades
         */
         std::string standardAdvisorString();
         std::string advisorString();
-
+        std::string allProductsString();
         
         /**returns the text for the help menu*/
         std::string helpText();
@@ -71,6 +71,10 @@ class GameOfTrades
         void printEndScreen();
 
         void updateTime();
+
+
+        std::string minStringText(double& min);
+        std::string maxStringText(double& max);
 
         /** Functions to handle inputs that depend on menu
          * has subfunctions:

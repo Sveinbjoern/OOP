@@ -36,6 +36,30 @@ void GameOfTrades::init(){
     // orderBook.products.insert("popp");
     // orderBook.products.insert("pipp"); 
     
+    // double a;
+    // double b;
+    // double c;
+    // double d;
+    // a = 1.234324525;
+    // b = 0.0000000012;
+    // c = 3123123.12;
+    // d = 0;
+    // std::string A;
+    // std::string B;
+    // std::string C;
+    // std::string D;
+    // A = HelpersNameSpace::doubleToStringPresicion(a);
+    // B = HelpersNameSpace::doubleToStringPresicion(b);
+    // C = HelpersNameSpace::doubleToStringPresicion(c);
+    // D = HelpersNameSpace::doubleToStringPresicion(d);
+    // std::cout << "double a: " << a << std::endl;
+    // std::cout << "double A: " << A << std::endl;
+    // std::cout << "double b: " << b << std::endl;
+    // std::cout << "double B: " << B << std::endl;
+    // std::cout << "double c: " << c << std::endl;
+    // std::cout << "double C: " << C << std::endl;
+    // std::cout << "double d: " << d << std::endl;
+    // std::cout << "double D: " << D << std::endl;
 
 
     // for(orderBook.setIterator = orderBook.products.begin(); orderBook.setIterator != orderBook.products.end() ; ++orderBook.setIterator) {
@@ -82,6 +106,8 @@ void GameOfTrades::init(){
 
     std::cout << advisorString();
     menuText = mainInput(menuText);
+    
+
     
     // GameOfTrades::printIntroduction();
     while (userInputText != "QUIT" && userInputText != "EXIT")
@@ -243,6 +269,7 @@ void GameOfTrades::getUserInputLine(std::string &userInputText)
 {
     cout << userName << "> ";
     cin.clear(); 
+    userInputText = "";
     // cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, userInputText);
     // cout << userInputText << endl;
@@ -395,9 +422,29 @@ std::string GameOfTrades::advisorString()
     return returnString;
 }
 
+std::string GameOfTrades::allProductsString()
+{
+    std::vector<std::string> products;
+    std::string returnString = "";
+    products = orderBook.getVectorOfProducts();
+    returnString.append("All available products:\n");
+    for (std::string prod : products)
+    {
+        returnString.append(prod);
+        returnString.append("\n");
+    }
+    return returnString;
+}
+
+  
 
 std::string GameOfTrades::mainInput(std::string overText)
 {
+    //Setting precision of cout with code from
+    // https://stackoverflow.com/questions/554063/how-do-i-print-a-double-value-with-full-precision-using-cout
+    typedef std::numeric_limits< double > dbl;
+    std::cout.precision(dbl::max_digits10);
+
     std::cout << overText << std::endl;
     GameOfTrades::getUserInputLine(userInputText);
     std::vector<std::string> tokens = CSVReader::tokenize(userInputText, ' ');
@@ -407,34 +454,192 @@ std::string GameOfTrades::mainInput(std::string overText)
     */
     auto lamMinMaxString = [&](std::string minOrMax)
     {
+        std::cout << "runing lamda for minMax";
         std::string returnString;
+        std::string example = "Example: ";
+        example.append(minOrMax);
+        example.append(" usd/doge bid");
         if (tokens.size() == 1)
         {
             returnString = helpCMD(minOrMax);
         } else
         {
-            std::vector<std::string> products = CSVReader::tokenize(tokens[1], '/')
-            if ( products.size() == 1)
+            std::vector<std::string> products;
+            try
             {
-                
+                products = CSVReader::tokenize(tokens[1], '/');
             }
-             try 
+            catch(const std::exception& e)
             {
                 
-                // orderBook.addOrderBookEntry(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
-                // entries.push_back(CSVReader::CheckValidData__ParseOBE(line,orderBook, true));
-            } catch(const std::exception& e)
+                returnString.append("Input resulted in error:\n");
+                returnString.append(e.what());
+                returnString.append("\n");
+                return returnString;
+            }
+            
+            
+              std::cout << products[0];
+              std::cout << "products.size(): " << products.size();
+              
+            
+           if (products.size() == 1)
             {
-                returnString.append()
+                returnString.append("Products must be seperated by \"/\",\n");
+                returnString.append("or you need to give two products.\n");
+                returnString.append(example);
+                return returnString;
+            } else if (products.size() == 0)
+            {
+                returnString.append(tokens[1]);
+                returnString.append(" is not a product pair.\n");
+                returnString.append(example);
+                return returnString;
+            } 
+
+            Product prod1;
+            Product prod2;
+
+
+            try
+            {
+                Product prod1 {products[0], orderBook};
+            }
+            catch(const std::exception& e)
+            {
+                try
+                {
+                     Product prod2 (products[1], orderBook);
+                }
+                catch(const std::exception& e)
+                {
+                    returnString.append(products[0]);
+                    returnString.append(" and ");
+                    returnString.append(products[1]);
+                    returnString.append("\nare not valid products\n");
+                    returnString.append(allProductsString());
+                    return returnString;std::cerr << e.what() << '\n';
+                }
+                returnString.append(products[0]);
+                returnString.append(" is not a valid product\n");
+                returnString.append(allProductsString());
+                return returnString;
+            }
+
+            try
+            {
+                 Product prod2 (products[1], orderBook);
+            }
+            catch(const std::exception& e)
+            {
+                returnString.append(products[1]);
+                returnString.append(" is not a valid product\n");
+                returnString.append(allProductsString());
+                return returnString;
+            }
+            
+            //If both prod1 and prod2 are not false we have two valid products
+            if (products[0] == products[1])
+            {
+                returnString.append("You have to give two different products.\n");
+                returnString.append(allProductsString());
+                return returnString;
+            }
+
+
+           
+
+
+            if (tokens.size() == 2 )
+            {
+                double bid = orderBook.getHighOrLowPriceBid(minOrMax, prod1, prod2);
+                double ask = orderBook.getHighOrLowPriceAsk(minOrMax, prod1, prod2);
+                
+                returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" bid for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(bid));
+                returnString.append(".\n");
+
+                returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" ask for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(ask));
+                returnString.append(".\n");
+                std::cout.precision(15);
+                std::cout << "ask " << ask << " bid " << bid<< endl; 
+
+                return returnString;
+            } else if (tokens[2] == "ASK" | tokens[2] == "ASKS")
+            {
+                double ask = orderBook.getHighOrLowPriceAsk(minOrMax, prod1, prod2);
+                returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" ask for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(ask));
+                returnString.append(".\n");
+                return returnString;
+            } else if (tokens[2] == "BID" | tokens[2] == "BIDS")
+            {
+                double bid = orderBook.getHighOrLowPriceBid(minOrMax, prod1, prod2);
+                 returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" bid for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(bid));
+                returnString.append(".\n");
+                return returnString;
+            } else
+            {
+                double bid = orderBook.getHighOrLowPriceBid(minOrMax, prod1, prod2);
+                double ask = orderBook.getHighOrLowPriceAsk(minOrMax, prod1, prod2);
 
                 
-                std::cerr << "exception: " << e.what() << std::endl;
+                returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" bid for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(bid));
+                returnString.append(".\n");
+
+                returnString.append("The ");
+                returnString.append(minOrMax);
+                returnString.append(" ask for ");
+                returnString.append(products[0]);
+                returnString.append("/");
+                returnString.append(products[1]);
+                returnString.append(" is ");
+                returnString.append(HelpersNameSpace::doubleToStringPresicion(ask));
+                returnString.append(".\n");
+
+
+                return returnString;
+
             }
         }
         
         return returnString;
     };
    
+
 
     if (tokens.size() > 0)
     {
@@ -467,14 +672,8 @@ std::string GameOfTrades::mainInput(std::string overText)
         {
             std::vector<std::string> products;
             products = orderBook.getVectorOfProducts();
-            overText = "";
-            overText.append("All available products:\n");
-            for (std::string prod : products)
-            {
-                overText.append(prod);
-                overText.append("\n");
-            }
-            overText.append("");
+            overText = allProductsString();
+            
             overText.append(advisorString());
             overText.append(standardAdvisorString());
             return overText;
