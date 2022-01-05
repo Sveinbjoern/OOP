@@ -1,0 +1,48 @@
+for(orderBook.setIterator = orderBook.products.begin(); orderBook.setIterator != orderBook.products.end() ; ++orderBook.setIterator) {
+            std::cout << *orderBook.setIterator << std::endl; // Note the "*" here
+        }    
+
+    std::cout << *orderBook.products.begin() << std::endl;
+
+    std::string s = "pipp";
+
+    if (orderBook.products.find(s) != orderBook.products.end())
+    {
+        std::cout << "is in the set" << s << std::endl;
+    } else
+    {
+        std::cout << "is not in the set" << s << std::endl;
+    }
+    
+    s = "qack";
+    if (orderBook.products.find(s) != orderBook.products.end())
+    {
+        std::cout << "is in the set" << s << std::endl;
+    } else
+    {
+        std::cout << "is not in the set" << s << std::endl;
+    }
+
+
+// cout << orderBook.products.find("pipp") << endl; // Note the "*" here
+
+    // for(string  f : orderBook.products) {
+    //         cout << f << endl; // Note the "*" here
+    //         cout << typeid(orderBook.products.begin()).name() << endl;
+    //     }
+    // for(int i = orderBook.products.begin() ; i < orderBook.products.end(); ++i) {
+    //         cout << orderBook.products[i] << endl; // Note the "*" here
+    //     } 
+     
+
+#ifndef FRUIT_HPP
+#define FRUIT_HPP
+
+enum class Fruit
+{
+    APPLE,
+    ORANGE,
+    BANANA
+};
+
+#endif
